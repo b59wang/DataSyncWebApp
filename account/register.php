@@ -9,10 +9,13 @@
 // includes
 include_once("../includes/functions.php");
 include_once("../settings/connect.php");
+include_once("../settings/debug.php");
 
-// set up header
-header('Content-Type: application/json');
   
+if(DEBUG){
+    var_dump($_POST);
+}
+
  // check if post varaible all exists
 if (!checkPostExists("function") ||
 	!checkPostExists("username") || 
@@ -20,6 +23,8 @@ if (!checkPostExists("function") ||
 	!checkPostExists("email") ||
 	!checkPostExists("password")) {
 	
+        // set up header
+        header('Content-Type: application/json');
 	header('HTTP/1.1 500 Internal Server');
 	die(json_encode(array('result' => 'ERROR', "code" => 100)));
 } 
@@ -45,6 +50,8 @@ if(mysqli_query($con,$insertQuery)){
 		echo "<html><body><p>Your account has been created, redirecting you to the login page in 5 seconds</p></body></html>";
 		header( "refresh:5;url=../index.php" );
 	} else if ($function == "json"){
+                // set up header
+                header('Content-Type: application/json');
 		echo json_encode(array('result' => 'SUCCESS', 'code' => 0));
 	}
 } else {
@@ -52,6 +59,8 @@ if(mysqli_query($con,$insertQuery)){
 		echo "<html><body><p>Problem creating account, please try again with another username.</p></body></html>";
 		header( "refresh:5;url=register.php" );
 	} else if ($function == "json"){
+                 // set up header
+                header('Content-Type: application/json');
 		echo json_encode(array('result' => 'ERROR', 'code' => 101));
 	}
 }
