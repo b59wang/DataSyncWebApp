@@ -10,12 +10,3 @@ PRIMARY KEY (`userid`),
 UNIQUE (`username`),
 UNIQUE (`email`)
 );
-
-CREATE TABLE IF NOT EXISTS `data`(
-`userid` int(11) NOT NULL,
-`type` varchar(32) NOT NULL,
-`text` varchar(256),
-`url` varchar(100),
-`date` date NOT NULL,
-FOREIGN KEY (`userid`) REFERENCES users(`userid`)
-);
