@@ -14,12 +14,53 @@ if (isset($_SESSION['userid'])) {
 
 <html>
     <head>
-
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
     </head>
     <body>
-        <p> <a href="../account/logout.php"> Logout </a></p>
+        <font face="century gothic,verdana,arial">
+        <a href="../account/logout.php"> Logout </a>
     <center>
-        <h1>Welcome to DataSync</h1>
+        <h2>Welcome to DataSync</h2>
+
+        <h3>---upload---</h3>
+        <form method="post" id="form1">
+            Text:<input type="text" id="inputField" name="text"> <br /> File:<input type="file" name="file" id="file"> <br />
+            <input type="hidden" id="ajaxtype" value="text" name="type">
+            <input type="hidden" value="<?php echo $userid; ?>" name="userid">
+            <input type="submit" id="submit1" value="Submit" >
+        </form>
+        <script>
+            $("#form1").submit(function(e)
+            {
+
+                var file = $('#file').val();
+                if (file == '') {
+                    $('#ajaxtype').val("text");
+                } else {
+                    $('#ajaxtype').val("file");
+                }
+
+                $.ajax({
+                    url: "http://localhost/DataSyncWebApp/json/upload.php",
+                    type: "POST",
+                    data: $('#form1').serialize(),
+                    async: false,
+                    success: function(data, textStatus, jqXHR)
+                    {
+
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert("Error occured during upload, " + textStatus + errorThrown);
+                    }
+                });
+
+                e.preventdefault();
+                return false;
+            });
+        </script>
+
+        <h3>---current stored---</h3>
         <table border="1" align="center">
             <tr><th>type</th><th>value</th><th>date</th></tr>
             <?php
@@ -40,5 +81,6 @@ if (isset($_SESSION['userid'])) {
             ?>
         </table>
     </center>
+    </font>
 </body>
 </html>

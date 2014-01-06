@@ -13,7 +13,7 @@ include_once("../settings/connect.php");
 include_once("../settings/debug.php");
 
 if (DEBUG) {
-    var_dump($_POST);
+ //   var_dump($_POST);
 }
 
 if (!checkPostExists("type") || !checkPostExists("userid")) {
@@ -39,7 +39,7 @@ if ($type == "text") {
     $result = mysqli_query($con, $checkquery);
     $total = (int) mysqli_fetch_assoc($result)['total'];
     if (DEBUG) {
-        var_dump($total);
+        //var_dump($total);
     }
 
     // maxium 10 user uploads

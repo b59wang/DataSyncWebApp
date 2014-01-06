@@ -18,7 +18,6 @@ function checkPostExists($key) {
 
 function printError($errorno) {
     header('Content-Type: application/json');
-    header('HTTP/1.1 500 Internal Server');
     die(json_encode(array('result' => 'ERROR', "code" => $errorno)));
 }
 
