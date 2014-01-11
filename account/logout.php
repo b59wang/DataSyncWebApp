@@ -8,9 +8,9 @@
  */
 
 // includes
-include_once("/includes/functions.php");
-include_once("/settings/connect.php");
-include_once("/settings/debug.php");
+include_once("../includes/functions.php");
+include_once("../settings/connect.php");
+include_once("../settings/debug.php");
 
 
 if (DEBUG) {
@@ -25,7 +25,6 @@ if (!checkPostExists("function") ||
     if (isset($_SESSION['userid'])) {
         unset($_SESSION['userid']);
         echo "<html><body><p>ByeBye</p></body></html>";
-        header("refresh:2;url=index.html");
         die();
     } else {
 // set up header

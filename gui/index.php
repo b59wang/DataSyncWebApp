@@ -18,6 +18,7 @@ if (isset($_SESSION['userid'])) {
     </head>
     <body>
         <font face="century gothic,verdana,arial">
+        <a href="account.php">My account</a> <br />
         <a href="../account/logout.php"> Logout </a>
     <center>
         <h2>Welcome to DataSync</h2>
