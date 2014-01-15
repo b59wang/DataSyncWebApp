@@ -40,7 +40,7 @@ if ($function == "json") {
 }
 
 // insert into DB
-$checkQuery = "SELECT userid,salt,password FROM datasync.users WHERE username = '$username';";
+$checkQuery = "SELECT userid,salt,password FROM users WHERE username = '$username';";
 
 // apply query
 $result = mysqli_query($con, $checkQuery);

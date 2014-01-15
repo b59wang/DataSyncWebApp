@@ -1,13 +1,46 @@
-<?php
-session_start();
-?>
 
 <?php
+// includes
+include_once("../includes/functions.php");
+include_once("../settings/connect.php");
+include_once("../settings/debug.php");
+
+session_start();
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
+} else if (checkPostExists("username") && checkPostExists("password")) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $checkQuery = "SELECT userid,salt,password FROM users WHERE username = '$username';";
+    $result = mysqli_query($con, $checkQuery);
+    if ($result) {
+        if (mysqli_num_rows($result) == 0) {
+            echo "<html><body><center><p>Wrong username or password</p>"
+            . "<p>Back to <a href='../index.html'>Home</a></p></center></body></html>";
+            die();
+        }
+        $row = mysqli_fetch_array($result);
+        $hash_pass = hash("sha256", $password . $row['salt']);
+        if ($hash_pass == $row['password']) {
+            session_destroy();
+            session_start();
+            $_SESSION['userid'] = $row['userid'];
+            $userid = $_SESSION['userid'];
+        } else {
+            echo "<html><body><center><p>Wrong username or password</p>"
+            . "<p>Back to <a href='../index.html'>Home</a></p></center></body></html>";
+            die();
+        }
+    } else {
+        echo "<html><body><center><p>Problem accessing account, please try again.</p>"
+        . "<p>Back to <a href='../index.php'>Home</a></p></center></body></html>";
+        die();
+    }
 } else {
-    echo "<html><body><p>Please log in</p></body></html>";
-    header("refresh:1;url=../index.html");
+    session_start();
+    session_destroy();
+    echo "<html><body><center><p>Please login</p>"
+    . "<p>Back to <a href='../index.php'>Home</a></p></center></body></html>";
     die();
 }
 ?>
@@ -74,7 +107,7 @@ if (isset($_SESSION['userid'])) {
                     if ($row['type'] == "text") {
                         echo "<td align=\"center\">" . $row['text'] . "</td><td>N/A</td>";
                     } else {
-                         echo "<td align=\"center\">" . $row['text'] . "</td><td><a href=\"" .$row['url'] . "\">Download</a></td>";
+                        echo "<td align=\"center\">" . $row['text'] . "</td><td><a href=\"" . $row['url'] . "\">Download</a></td>";
                         //TODO add other file type support
                     }
                     echo "<td align=\"center\">" . $row['date'] . "</td></tr>";

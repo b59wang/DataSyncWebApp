@@ -1,41 +1,5 @@
 <html>
     <head>
-        <script>
-            function validateForm()
-            {
-                alert("asdf");
-                var fullname = document.forms["form1"]["fullname"].value;
-                var username = document.forms["form1"]["username"].value;
-                var email = document.forms["form1"]["email"].value;
-
-                if (fullname == null || fullname == "" || username == null || username == "" || email == null || email == "") {
-                    alert("Fields must be filled out");
-                    return false;
-                }
-                x = document.forms["form1"]["email"].value;
-                var atpos = x.indexOf("@");
-                var dotpos = x.lastIndexOf(".");
-                if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
-                    alert("Not a valid e-mail address");
-                    return false;
-                }
-
-                var pw1 = document.getElementById('pw1').value;
-                var pw2 = document.getElementById('pw2').value;
-                if (pw1 != pw2 || pw1.length < 4) {
-                    alert("Password are not the same, please try again.");
-                    return false;
-                }
-                else if (){
-                    alert("Invalid email address");
-                    return false;
-                }
-
-                document.getElementById("form1").submit();
-                return true;
-            }
-        </script>
-    </head>
     <body >
         <font face="century gothic,verdana,arial">
         <p><a href="index.html" > Back to home </a></p>
@@ -49,9 +13,44 @@
                 <p>Password:<input id="pw1"type="password" name="password"></p>
                 <p>Re-Type Password:<input  id="pw2" type="password" name="repassword"></p>
                 <input type="hidden" value="broswer" name="function">
-                <input type="submit" value="Submit" onclick="validateForm();">
+                <input type="submit" value="Submit">
             </form>
-        </div>
-        </font>
-    </body>
+            <script>
+                function validateForm()
+                {
+                    var fullname = document.forms["form1"]["fullname"].value;
+                    var username = document.forms["form1"]["username"].value;
+                    var email = document.forms["form1"]["email"].value;
+                    var password = document.forms["form1"]["password"].value;
+                    var repassword = document.forms["form1"]["repassword"].value;
+                    if (fullname === '' || username === '' || email === '' || password === '' || repassword === '') {
+                        alert("Not all fields has been filled!");
+                        return false;
+                    }
+                    if (password != repassword) {
+                        alert("The two passwords do not match, please enter again.");
+                        return false;
+                    }
+
+                    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!re.test(email)) {
+                        alert("The email address you entered is not valid");
+                        return false;
+                    }
+                    
+                    if (password.length < 6){
+                        alert("You need a stonger password");
+                        return false;
+                    }
+                    
+                    if(username.length < 3){
+                        alert("Username need to be > 4 in length");
+                        return false;
+                    }
+                }
+            </script>
+        </head>
+    </div>
+    </font>
+</body>
 </html>
